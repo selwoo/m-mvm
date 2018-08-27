@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.css" rel="stylesheet"/>
+</head>
+<body>
+	<div class="mui-content">
+		<div class="mui-content-padded">
+			<input type="text" placeholder="home..." m-model="text"/>
+			视图一：{{text}}{{text}}；视图二：{{text1}}
+			<h4>视图三：{{text2}}；</h4>
+		</div>
+	</div>
+	
+	<script src="js/mui.js"></script>
+	<script src="js/m-mvm.js"></script>
+	<script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		var vm = new Mmvm({
+		    	el: '.mui-content',
+		    	data: {
+		        	text: '首页',
+		        	text1: '子页一',
+		        	text2: '子页二'
+		    	}
+		    })
+      	});
+    </script>
+</body>
+</html>

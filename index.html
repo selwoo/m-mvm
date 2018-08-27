@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.css" rel="stylesheet"/>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav border-bottom">
+	    <h1 class="mui-title">首页</h1>
+	</header>
+	<nav class="mui-bar mui-bar-tab">
+	    <a class="mui-tab-item mui-active" data-tab="home">
+	        <span class="mui-icon mui-icon-home"></span>
+	        <span class="mui-tab-label">首页</span>
+	    </a>
+	    <a class="mui-tab-item" data-tab="tag1">
+	        <span class="mui-icon mui-icon-paperplane"></span>
+	        <span class="mui-tab-label">tag1</span>
+	    </a>
+	    <a class="mui-tab-item" data-tab="tag2">
+	        <span class="mui-icon mui-icon-paperplane"></span>
+	        <span class="mui-tab-label">tag2</span>
+	    </a>
+	</nav>
+	
+	
+	<script src="js/mui.js"></script>
+	<script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	mui.plusReady(function() {
+      		tabToggle();
+      	});
+      	//tab页切换
+		function tabToggle(){
+			document.querySelector('.mui-bar-tab .mui-tab-item.mui-active').classList.remove('mui-active');
+			document.querySelector('.mui-bar-tab .mui-tab-item[data-tab="home"]').classList.add('mui-active');
+			//加载tab页子窗口
+			var self = plus.webview.currentWebview();
+			//选项卡点击事件（如果不设置statusbar，安卓无法正常显示）
+		    var activeTab = mui(".mui-bar-tab .mui-tab-item")[0].getAttribute('data-tab');
+		    plus.webview.getWebviewById(activeTab) || self.append(plus.webview.create(activeTab + '.html',activeTab,{top: 44,bottom: 50}));
+			mui('.mui-bar-tab').on('tap', '.mui-tab-item', function(e) {
+				var targetTab = this.getAttribute('data-tab');
+				if (targetTab == activeTab) {
+					return;
+				}else{
+					document.querySelector('.mui-title').innerText = this.querySelector('.mui-tab-label').textContent;
+					if(plus.webview.getWebviewById(targetTab)){
+						plus.webview.show(targetTab);
+					}else{
+						self.append(plus.webview.create(targetTab + '.html',targetTab,{top: 44,bottom: 50,statusbar:{background:'#0062cc'}}));
+					}
+				    //显示目标选项卡
+					plus.webview.hide(activeTab);
+				    activeTab = targetTab;
+				};
+			});
+		}
+    </script>
+</body>
+</html>
